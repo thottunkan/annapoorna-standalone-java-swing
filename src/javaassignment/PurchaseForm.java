@@ -18,8 +18,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javafx.util.converter.LocalDateTimeStringConverter;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.openide.util.Exceptions;
@@ -181,7 +183,7 @@ public class PurchaseForm extends javax.swing.JFrame {
 
         txtProductId1.setEditable(false);
 
-        curdate.setDateFormatString("yyyy-mm-dd");
+        curdate.setDateFormatString("YYYY-MM-dd"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -214,9 +216,9 @@ public class PurchaseForm extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cmbProductName, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbProductName, javax.swing.GroupLayout.Alignment.TRAILING, 0, 222, Short.MAX_VALUE)
                             .addComponent(cmbCustName, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(curdate, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))))
+                            .addComponent(curdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(49, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -297,20 +299,19 @@ public class PurchaseForm extends javax.swing.JFrame {
             int totalPrice = Integer.parseInt(txtTotalPrice.getText()) ;
             int customerId = Integer.parseInt( txtCustomerId.getText());
             System.out.println("product id "+productId+" quantity "+quantity+" totalprice "+totalPrice+" cust_id "+customerId);
-            PreparedStatement ps = DbCon.getConnection().prepareStatement("INSERT INTO sell(quantity,total_price,cust_id,prod_id ,sell_time) values(?,?,?,?,?)");
+            PreparedStatement ps = DbCon.getConnection().prepareStatement("INSERT INTO sell(quantity,total_price,cust_id,prod_id ,date) values(?,?,?,?,?)");
             ps.setInt(1, quantity);
             ps.setInt(2, totalPrice);
             ps.setInt(3, customerId);
             ps.setString(4, productId);
            
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
-            LocalDateTime now = LocalDateTime.now();
-            String curdate = now.format(dtf);
-            
-            //ps.setDate(5,Date.);
-            //ps.setDate(5,new Date(10));
-             ps.setString(5, "curtime()");
+            SimpleDateFormat sdtf = new SimpleDateFormat("YYYY-MM-dd");
+            String date = sdtf.format(curdate.getDate());
+                
+            System.out.println("javaassignment.PurchaseForm.addSaleBtnActionPerformed() date = "+date);
+            ps.setDate(5,Date.valueOf(date) );
             int i = ps.executeUpdate();
+            
             if(i>0){
                 JOptionPane.showMessageDialog(rootPane, "Record Saved...☻");
             }else{

@@ -90,9 +90,9 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="cmbProductName" alignment="1" max="32767" attributes="0"/>
+                              <Component id="cmbProductName" alignment="1" pref="222" max="32767" attributes="0"/>
                               <Component id="cmbCustName" alignment="1" max="32767" attributes="0"/>
-                              <Component id="curdate" alignment="0" pref="222" max="32767" attributes="0"/>
+                              <Component id="curdate" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -244,7 +244,7 @@
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="curdate">
           <Properties>
-            <Property name="dateFormatString" type="java.lang.String" value="yyyy-mm-dd"/>
+            <Property name="dateFormatString" type="java.lang.String" value="YYYY-MM-dd" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
