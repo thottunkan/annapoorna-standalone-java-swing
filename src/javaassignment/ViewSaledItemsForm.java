@@ -206,6 +206,7 @@ public class ViewSaledItemsForm extends javax.swing.JFrame {
                MessageFormat footer = new MessageFormat("annapoorna food products");
                try {
                    saletable.print(JTable.PrintMode.FIT_WIDTH, head, footer);
+                   
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(rootPane, e.getMessage());
                }
