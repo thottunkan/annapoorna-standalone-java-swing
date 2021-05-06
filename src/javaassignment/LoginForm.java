@@ -185,32 +185,42 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbtnActionPerformed
-        if( !(username.getText().equals("")) || !(password.getText().equals(""))){
-        try {
-            String username  = this.username.getText();
-            String password = this.password.getText();
-            PreparedStatement ps = DbCon.getConnection().prepareStatement("select username , password FROM login WHERE username = ?");
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
-            String fetchedusername = null; 
-            String fetchedPassword = null; 
-            while (rs.next()) {
-                fetchedusername = rs.getString("username");
-                fetchedPassword = rs.getString("password");
-            }
-            System.out.println("Fetched username = "+ fetchedusername +" fetched password = "+fetchedPassword);
-            if (username.equals(fetchedusername) && password.equals(fetchedPassword)) {
-                DashboardForm df = new DashboardForm();
-                df.setVisible(true);
-                dispose();
-                DbCon.getConnection().close();
-            }else{
-                JOptionPane.showMessageDialog(rootPane,"Invalid username or password");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane,ex.getMessage());
-            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        if( !(username.getText().equals("")) && !(password.getText().equals(""))){
+            
+            if (DbCon.getConnection()!= null) {
+                  try {
+                
+                        String username  = this.username.getText();
+                        String password = this.password.getText();
+                        PreparedStatement ps = DbCon.getConnection().prepareStatement("select username , password FROM login WHERE username = ?");
+                        ps.setString(1, username);
+                        ResultSet rs = ps.executeQuery();
+                        String fetchedusername = null; 
+                        String fetchedPassword = null; 
+
+                        while (rs.next()) {
+                            fetchedusername = rs.getString("username");
+                            fetchedPassword = rs.getString("password");
+                        }
+                        System.out.println("Fetched username = "+ fetchedusername +" fetched password = "+fetchedPassword);
+                        if (username.equals(fetchedusername) && password.equals(fetchedPassword)) {
+                            DashboardForm df = new DashboardForm();
+                            df.setVisible(true);
+                            dispose();
+                            DbCon.getConnection().close();
+                        }else{
+                            JOptionPane.showMessageDialog(rootPane,"Invalid username or password");
+                        }
+                    }catch (SQLException ex) {
+                        System.out.println("javaassignment.LoginForm.loginbtnActionPerformed()");
+                        JOptionPane.showMessageDialog(rootPane,"Please Connect to Database");
+                        //Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+                    }  
+                } else {
+                       JOptionPane.showMessageDialog(rootPane,"Connection failed...! Please Connect to Database");
+                }
+            
+            
         }else{
             JOptionPane.showMessageDialog(rootPane,"Fill all the fields...!");
         } 
