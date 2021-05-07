@@ -91,6 +91,8 @@ public class AddCustomerForm extends javax.swing.JFrame {
 
         jLabel3.setText("PHONE");
 
+        txtCustPhone.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
         jLabel4.setText("ADDRESS FIELD 1");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -271,15 +273,30 @@ public class AddCustomerForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addCustbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustbtnActionPerformed
-        String name = txtCustName.getText();
+        String name = txtCustName.getText().toUpperCase();
         String email = txtCustEmail.getText();
         String phone = txtCustPhone.getText();
-        String af1 = txtAf1.getText();
-        String af2 = txtAf2.getText();
-        String af3 = txtAf3.getText();
-        String af4 = txtAf4.getText();
+        String af1 = txtAf1.getText().toUpperCase();
+        String af2 = txtAf2.getText().toUpperCase();
+        String af3 = txtAf3.getText().toUpperCase();
+        String af4 = txtAf4.getText().toUpperCase();
         System.out.println("af1="+af1 +"af2="+af2 +"af3="+af3 + "af4="+af4);
-        
+        if (name.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Enter Customer Name...", "Missing Customer Name", HEIGHT);
+        }
+        else if(email.equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Enter  Email...", "Missing Email", HEIGHT);
+        }else if(phone.equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Enter Customer Phone number...", "Missing Phone number", HEIGHT);
+        }else if(af1.equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Enter Address Field 1...", "Missing Address Field 1", HEIGHT);
+        }else if(af2.equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Enter Address Field 2...", "Missing Address Field 2", HEIGHT);
+        }else if(af3.equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Enter Address Field 3...", "Missing Address Field 3", HEIGHT);
+        }else if(af4.equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Enter Address Field 4...", "Missing Address Field 4", HEIGHT);
+        }else{
         try {
             PreparedStatement addrPrepare = DbCon.getConnection().prepareStatement("insert into address(field1,field2,field3,field4) values(?,?,?,?)");
             addrPrepare.setString(1, af1);
@@ -318,6 +335,7 @@ public class AddCustomerForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Exceptions.printStackTrace(ex);
         }
+        }  
     }//GEN-LAST:event_addCustbtnActionPerformed
 
     /**

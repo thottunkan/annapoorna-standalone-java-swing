@@ -206,8 +206,8 @@ public class AddProductForm extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            String productid = this.productid.getText();
-            String productname = this.productname.getText();
+            String productid = this.productid.getText().toUpperCase();
+            String productname = this.productname.getText().toUpperCase();
             String productprice = this.productprice.getText();
             
             if (productid.equals("")) {
